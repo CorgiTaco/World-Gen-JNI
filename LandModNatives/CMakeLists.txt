@@ -4,7 +4,14 @@ project(LandMod)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_FLAGS_DEBUG "-g")
 set(CMAKE_CXX_FLAGS_RELEASE "-Ofast")
-set(CMAKE_CXX_FLAGS "-Wall -Wextra -static")
+
+if (WIN32)
+    set(PLATFORM_FLAGS "-static")
+elseif (UNIX)
+    set(PLATFORM_FLAGS "-fPIC")
+endif ()
+
+set(CMAKE_CXX_FLAGS "-Wall -Wextra ${PLATFORM_FLAGS}")
 
 find_package(JNI REQUIRED)
 include_directories(${JNI_INCLUDE_DIRS})
